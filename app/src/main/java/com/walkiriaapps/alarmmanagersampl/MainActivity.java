@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -20,13 +21,28 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView notificationsTime;
     private int alarmID = 1;
+    private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        settings = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+
+        String hour, minute;
+
+        hour = settings.getString("hour","");
+        minute = settings.getString("minute","");
+
+
         notificationsTime = (TextView) findViewById(R.id.notifications_time);
+
+        if(hour.length() > 0)
+        {
+            notificationsTime.setText(hour + ":" + minute);
+        }
+
         findViewById(R.id.change_notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,8 +67,15 @@ public class MainActivity extends AppCompatActivity {
                         today.set(Calendar.MINUTE, selectedMinute);
                         today.set(Calendar.SECOND, 0);
 
+                        SharedPreferences.Editor edit = settings.edit();
+                        edit.putString("hour", finalHour);
+                        edit.putString("minute", finalMinute);
+
+                        edit.commit();
 
                         Toast.makeText(MainActivity.this, getString(R.string.changed_to, finalHour + ":" + finalMinute), Toast.LENGTH_LONG).show();
+
+
                         setAlarm(alarmID, today.getTimeInMillis(), MainActivity.this);
                     }
                 }, hour, minute, true);//Yes 24 hour time

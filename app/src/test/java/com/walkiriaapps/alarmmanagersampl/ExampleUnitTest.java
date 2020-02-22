@@ -1,4 +1,4 @@
-package com.walkiriaapps.alarmmanagersample;
+package com.walkiriaapps.alarmmanagersampl;
 
 import org.junit.Test;
 

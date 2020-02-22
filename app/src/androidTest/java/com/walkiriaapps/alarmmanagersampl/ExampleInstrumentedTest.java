@@ -1,4 +1,4 @@
-package com.walkiriaapps.alarmmanagersample;
+package com.walkiriaapps.alarmmanagersampl;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.walkiriaapps.alarmmanagersample", appContext.getPackageName());
+        assertEquals("com.walkiriaapps.alarmmanagersampl", appContext.getPackageName());
     }
 }
